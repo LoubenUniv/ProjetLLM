@@ -1,0 +1,4 @@
+(executable
+ (public_name LLMParser)
+ (name main)
+ (libraries LLMParser))

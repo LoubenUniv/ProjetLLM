@@ -1,0 +1,8 @@
+(library
+ (name LLMParser)
+)
+
+(ocamllex lexer)
+
+(menhir
+ (modules parser))
