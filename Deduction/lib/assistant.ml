@@ -552,10 +552,6 @@ let verifier_preuve fp =
    with (* formule incorrecte *)
    | Lexer.Lexical_error | Parsing.Parse_error ->
 	    print_string "The formula is incorrect line ";
-	    let p = lexeme_start_p buffer in
-	      (print_int p.pos_lnum ;
-	       print_string  " character ";
-	       print_int (1+p.pos_cnum-p.pos_bol));
 	      print_newline ();
 	      	
 ;;
@@ -606,24 +602,9 @@ let dnpreuve cf =
     with (* filtrage des erreurs faites en lisant la formule *)
       | Lexer.Lexical_error | Parsing.Parse_error -> 
 	print_string  "The formula is incorrect line "; 
-	  let p = lexeme_start_p buffer in
-	    (print_int p.pos_lnum ;
-	     print_string " character ";
-	     print_int (1+p.pos_cnum-p.pos_bol));
-
-
 	  print_newline ()
 ;;
 
-
-
-match Sys.argv.(1) with
-  | "-v" -> annotate := false; verifier_preuve (Sys.argv.(2))
-  | "-a" -> annotate := true; verifier_preuve (Sys.argv.(2))
-  | "-b" -> annotate := true; adroite := false; verifier_preuve (Sys.argv.(2))
-  | "-p" -> dnpreuve (Sys.argv.(2))
-  | _ -> failwith  "missing option"
-;;
 
 
 	   
