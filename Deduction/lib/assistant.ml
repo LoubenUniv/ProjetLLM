@@ -579,18 +579,27 @@ let dnpreuve cf =
       (try (* produire la preuve sous forme line list, la transformer en preuve_arbre list
 	      avant de la compacter *)
 	 let p = preuve_classique a in
+   (* MS: peak at data structure *)
+   (* Printf.printf "%s\n" (show_list_of show_line p); *)
 	 let (pla,_) = preuve_arbre_liste_de_preuve_ligne_liste p in 
-	 let (_,pc) = compacter_preuve_arbre_liste pla [] in
+   (* MS: peak at data structure *)
+   (* Printf.printf "%s\n" (show_list_of show_preuve_arbre pla); *)
+   let (_,pc) = compacter_preuve_arbre_liste pla [] in
 	 (* élimination des lignes qui ne servent pas dans la preuve de la
 	   conclusion de pc *)
          let tpc = preuve_tableau_de_preuve_liste pc in
          let pc = preuve_liste_de_preuve_tableau tpc in
+         (* MS: what happpens when converting this to structured format? *)
+         let (plac, _ ) = preuve_arbre_liste_de_preuve_ligne_liste pc in 
+          (* MS: peak at data structure *)
+          (* Printf.printf "%s\n" (show_list_of show_preuve_arbre plac); *)
 
 	   ( (* le mot proof est affiché pour
 		que index.php sache que la preuve a été faite *)
 	     print_string  "proof.";print_newline ();
 	     (* la preuve est affichée sans justification *)
-	     afficher_preuve pc
+	     (* afficher_preuve pc;print_newline (); *)
+       Printf.printf "%s\n" (show_list_of (string_of_preuve_arbre 0) plac)
 	   )
        with
 	   Improvable h -> 

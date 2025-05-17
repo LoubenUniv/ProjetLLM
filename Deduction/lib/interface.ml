@@ -12,7 +12,8 @@ type   formula =
   | Conj of formula*formula
   | Neg of formula
   | Equiv of formula*formula
-;;
+  [@@deriving show]
+
 
 type command =
   | Prove of formula
@@ -25,12 +26,16 @@ type line =
   | Assume of formula
   | Usable of formula
   | Therefore of formula
-;;
+  [@@deriving show]
+
+  (* MS *)
+let show_list_of f ls = List.fold_left  (fun lstrs l -> lstrs ^ (f l) ^ "\n") "" ls
+
 
 type preuve_arbre =
   | Atome of formula
   | Bloc of formula*preuve_arbre list*formula
-;;
+  [@@deriving show]
 
 
 type justified_line =
@@ -166,3 +171,30 @@ let string_of_formula mg md df p f =
   in rsof df p f
 ;;
 
+
+
+(* MS *)
+
+let paren_prio curr_prio context_prio s = 
+  if curr_prio > context_prio 
+  then s
+  else "(" ^ s ^ ")"
+
+let rec string_of_formula_simple context_prio = function 
+| Var x -> x
+| False -> "F"
+| Imp (f1, f2) -> paren_prio priority_imp  context_prio (string_of_formula_simple priority_imp f1 ^ " => " ^  string_of_formula_simple  priority_imp f2)
+| Disj (f1, f2) -> paren_prio priority_disj context_prio (string_of_formula_simple  priority_disj f1 ^ " + " ^  string_of_formula_simple priority_disj f2)
+| Conj (f1, f2) -> paren_prio priority_conj context_prio (string_of_formula_simple priority_conj f1 ^ " & " ^ string_of_formula_simple  priority_conj f2)
+| Neg (f) -> paren_prio priority_neg context_prio ("- " ^ string_of_formula_simple priority_neg f)
+| Equiv (f1, f2) -> paren_prio priority_equiv context_prio (string_of_formula_simple priority_equiv f1 ^ " <=> " ^ string_of_formula_simple priority_equiv f2)
+
+let indent_factor = 3
+let indent ind s = (espaces (indent_factor * ind)) ^ s
+
+let rec string_of_preuve_arbre ind = function
+| Atome f -> indent ind (string_of_formula_simple 0 f)
+| Bloc (fa, pas, fc) -> 
+  indent ind ("(" ^ "assume " ^ string_of_formula_simple 0 fa ^ "\n") ^
+            (show_list_of (string_of_preuve_arbre (ind + 1)) pas) ^
+  indent ind ("therefore " ^ string_of_formula_simple 0 fc ^ ")\n")
