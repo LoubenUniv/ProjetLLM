@@ -1,0 +1,54 @@
+<purpose>
+        Translate the given content based on the instructions and examples
+</purpose>
+
+<instructions>
+        <instruction> always in the same format </instruction>
+        <instruction> only respond the translation and nothing else </instruction>
+        <instruction> the content will contain a context and a goal, the context translation will be labeled as "Formalized context: " and the goal translation will be labeled as "Formalized goal: "  </instruction>
+
+</instructions>
+
+<examples>
+
+        <example>
+Formalized context: ((Red -> Hot) && (Hot -> (Burn || Thirsty)))
+Formalized goal: (Red -> Burn)
+        </example>
+
+        <example>
+Formalized context: (Water -> Happy) && ((!Water) -> (Angry || Sad))
+Formalized goal: (Angry -> Water)
+        </example>
+
+        <example>
+Formalized context: ((Fire -> Hot) && (Hot -> (Burn ∣∣ Dry))) && ((Burn -> Pain) && (Dry -> Thirsty))
+Formalized goal: (Fire→Pain)
+        </example>
+       
+        <example>
+Formalized context: ((Sun -> Bright) && (Bright -> (Warm ∣∣ Blinding))) && ((Warm -> Comfortable) && (Blinding -> HardToSee))
+Formalized goal: (Sun→Comfortable)
+        </example>
+
+
+        <example>
+Formalized context: ((Studying -> Knowledgeable) && (Knowledgeable -> (Confident ∣∣ Prepared))) && ((Confident -> Success) && (Prepared -> LessStress))
+Formalized goal: (Studying -> Success)
+        </example>
+
+
+</examples>
+
+<content>
+        <context>
+
+        </context>
+
+        <goal>
+
+        </goal>
+</content>
+
+
+
