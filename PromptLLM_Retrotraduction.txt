@@ -1,0 +1,46 @@
+<purpose>
+        Translate the given content based on the instructions and examples
+</purpose>
+
+<instructions>
+        <instruction> always in the same format </instruction>
+        <instruction> only respond the translation and nothing else </instruction>
+        <instruction> the content will contain a logical expression </instruction>
+
+
+</instructions>
+
+<examples>
+
+        <example>
+We want to show
+-p & -q => -(p + q)
+
+Let's assume
+(1) p & -q  is true
+
+In order to derive a contradiction,
+let's assume
+(2) p + q
+
+
+With (2) we now distinguish the case
+(2 a) p
+With (1), we also have -p and thus a contradiction
+
+(2 b) q
+With (1), we also have -q and thus a contradiction
+
+ From (2), we therefore derive a contradiction.
+
+</example>
+
+
+
+
+
+</examples>
+
+<content>
+
+</content>
